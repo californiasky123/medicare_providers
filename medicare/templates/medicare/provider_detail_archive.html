@@ -1,0 +1,142 @@
+{% extends 'medicare/base.html' %}
+
+<!-- chnote2 commenting out medicare_extras for now -->
+<!--    {% load medicare_extras %} -->
+
+   
+   <!-- safe filter on for raw HTML stored in database -->
+   {% block content %}
+     <header>
+       <div class="row">
+         <div class="col-sm-10">
+           <h2>{{ provider.provider_name | safe }}</h2>
+         </div>
+         <div class="col-xs-1">
+<!--            {% if user.is_authenticated %} -->
+<!-- chnote2 uncomment out authentication line above once user auth is added -->
+             <a class="btn btn-outline-secondary" href="{% url 'provider_update' provider.pk %}">edit</a>
+           {% endif %}
+         </div>
+         <div class="col-xs-1">
+<!--            {% if user.is_authenticated %} -->
+<!-- chnote2 uncomment out authentication line above once user auth is added -->
+             &nbsp;<a class="btn btn-outline-warning" href="{% url 'provider_delete' provider.pk %}">delete</a>
+           {% endif %}
+         </div>
+       </div>
+     </header>
+
+   
+<!--      {% if site.heritage_site_category.category_name %}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Category</p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.heritage_site_category.category_name }}</p>
+         </div>
+       </div>
+     {% endif %} -->
+
+
+<!--      {% if site.country_area_names%}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Country Area</p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.country_area_names}}</p>
+         </div>
+       </div>
+     {% endif %} -->
+
+<!--       {% if site.region_names%}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Region</p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.region_names}}</p>
+         </div>
+       </div>
+     {% endif %} -->
+
+<!--       {% if site.sub_region_names%}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Sub Region </p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.sub_region_names}}</p>
+         </div>
+       </div>
+     {% endif %} -->
+
+<!--       {% if site.intermediate_region_names%}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Intermediate Region </p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.intermediate_region_names}}</p>
+         </div>
+       </div>
+     {% endif %}
+ -->
+
+<!--      {% if site.description %}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Description</p>
+         </div>
+         <div class="col-sm-10">
+           {{ site.description | safe }}
+         </div>
+       </div>
+     {% endif %} -->
+   
+<!--      {% if site.justification %}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Justification</p>
+         </div>
+         <div class="col-sm-10">
+           {{ site.justification | safe }}
+         </div>
+       </div>
+     {% endif %} -->
+   
+<!--      {% if site.date_inscribed %}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Date Inscribed</p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.date_inscribed }}</p>
+         </div>
+       </div>
+     {% endif %} -->
+   
+<!--      {% if site.latitude and site.longitude %}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Geo coordinates</p>
+         </div>
+         <div class="col-sm-4">
+           <p>{{ site.latitude }}, {{ site.longitude }} (<span style="font-style:italic">lat</span>.,
+             <span style="font-style:italic">long</span>.)</p>
+         </div>
+       </div>
+     {% endif %} -->
+   
+<!--      {% if site.area_hectares %}
+       <div class="row">
+         <div class="col-sm-2">
+           <p>Area</p>
+         </div>
+         <div class="col-sm-10">
+           <p>{{ site.area_hectares }} hectares</p>
+         </div>
+       </div>
+     {% endif %}
+   {% endblock content %} -->

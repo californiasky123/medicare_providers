@@ -1,0 +1,12 @@
+{% extends 'medicare/base.html' %}
+
+{% block content %}
+
+  <form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the provider "{{ provider.provider_name }}"?</p>
+    <button type="submit" class="btn btn-outline-danger">delete</button>
+    <a class="btn btn-outline-secondary" href="{% url 'provider_detail' provider.pk %}">cancel</a>
+  </form>
+
+{% endblock content %}

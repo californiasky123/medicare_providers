@@ -1,0 +1,109 @@
+SI 664 Project Log 
+
+########################
+# TUES 11/27 AFTERNOON #
+########################
+
+- Step 1 is to get data from CSV into DB
+- Tried to use code from instructor  (in Scripts dir in main dir): 
+	- Code in inspect_un_datasets creates separate CSVs for each column
+	- Unclear how we get those CSVs into the DB
+- Options for getting CSVs into DB: 
+	- Option 1: Import Wizard
+		- https://stackoverflow.com/questions/3635166/how-to-import-csv-file-to-mysql-table
+		- Seems to be loading OK
+		- Challenge: Crown data issue in row 1366
+		- Ideally want to be able to load entire CSV and then reconfigure DB schema to match
+		- ** Next step could be to try with dummy version 
+	- Option 2: Use script in Medium article: 
+		- https://medium.com/@AviGoom/how-to-import-a-csv-file-into-a-mysql-database-ef8860878a68
+		- Key thing is to make sure that datatypes in data model match what's in CSV 
+		- 
+- Prepping original CSV 
+	1) Renamed column names to have underscores instead of spaces 
+
+
+########################
+# TUES 11/27 EVENING #
+########################
+
+1. Inspect script
+
+	- Understand now what inspect script is doing
+	- Successfully used inspect script (from Anthony) to create separate csv 
+	- This will be used for the different tables (e.g. drg_def, region, etc), which will map to IDs 
+
+2. Loading data from CSVs into DB 
+
+	- This site (link below) gives good overview of how to create actual schema and load data in
+		- http://www.mysqltutorial.org/import-csv-file-mysql-table/
+	- Will eventually need to write script with SQL language like what's in the example SQL script (see CREATE TABLE statement). This will create a series of empty tables. 
+	- I can then fill in using similar language to script (LOAD DATA INFILE)
+	- This script from Anthony is also helpful: 
+		- unesco_heritage_sites.sql (in SI664/wk4/SI664-scripts/scripts/input/sql/unesco_heritage_sites.sql)
+
+3. Loading data in through workbench
+
+	- Successfully loaded data into database diagram on workbench, although not sure whether this was helfpul. 
+	- Probably want to avoid using Workbench because it's not helpful in the real world. 
+
+4. Plan for next steps: 
+
+	X 1. Wait for Anthony to get back to me about data model 
+
+	2. Continue to amend Inspect script so that it can be used to create a list of unique values for each table (drug definition, provider, etc.)
+
+	3. Create empty tables with CREATE TABLE statements 
+
+	4. Load data into empty tables (populate)
+
+5. Questions: 
+
+	1. What about loading in the thing that links everything together (Heritage Site Name --> Country Area etc.) Is this in a separate script? It isn't outputted into the Output folder using the inspect script.
+
+	2. How do I autoincrement whewn I'm loading data into the DB (step 4 above)
+	
+		- This should be done automatically through the script (see Anthony's example )
+
+
+########################
+# FRI 11/30 AFTERNOON #
+########################
+
+
+What I did: 
+
+	1. Changed my.ini file with thi spath : 
+		This PC --> Local Disk (C:) --> ProgramData -> MySQL --> MySQL SErver 8.0 --> my.ini
+
+	2. Determined I don't need to use inspect_medicare_data.py file. Use medicare_initial.sql instead. 
+
+	3. Wrote most of medicare_initial.sql to set up database. 
+
+
+Questions: 
+
+	- ADDRESS table: should zip be unique?
+
+Next steps: 
+
+	0. Look at script on Canvas from Anthony
+	
+	1. Check through rest of medicare_initial.sql
+		- Make sure nothing's missing 
+		- Check datatypes 
+		- Add in last section that ties to variables in Excel
+
+	2. Figure out where to store CSV file to load
+		- Might want to reference https://github.com/UMSI-SI664-2018Fall/SI664-docs/blob/master/sql/mysql-load_local_file_setup-win.md 
+		- Should be able to use relative file path from where main SQL file is stored 
+			- E.g. LOAD DATA LOCAL INFILE 'output/movie.tsv'
+
+	3. Figure out where the outputted db/sql files will go --> 
+		- Will they populate directly into db? 
+			- I think so. 
+			- Won't need to import from a dump file like in HW assignment
+			- Will make dump file layer as a backup
+			- Just need to make sure I store db in the correct location in the file structure 
+
+	4. Start marshalling through the rest of the steps 

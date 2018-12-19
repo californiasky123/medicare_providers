@@ -1,0 +1,23 @@
+Medicare App  - Django 
+
+Update 12/15 Evening 
+
+Done: 
+	- DB
+	- Social Auth
+	- Basic display 
+
+Next: 
+	- Figure out what additional stuff needs to be added for provider
+		- E.g. other attributes
+
+After: 	
+	- Forms
+	- Filters
+	- API 
+	- Git Ignore 
+		- Add secrets to gitignore
+		- Add db to gitignore 
+		- Anything else? Check final project assignment on GitHub  
+	- DB cleanup  
+		- Move old versions of sql update scrips 

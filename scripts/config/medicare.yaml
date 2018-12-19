@@ -1,0 +1,11 @@
+################
+#   Database   #
+################
+
+mysql:
+  host: localhost
+  port: 3306
+  user: caroline
+  passwd: 123Remember
+  db: medicare
+  local_infile: True

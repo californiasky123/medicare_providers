@@ -1,0 +1,64 @@
+MEDICARE PROJECT STEPS 
+
+
+4 easy
+1 medium 
+2 hard
+
+WEEK 4 - setup (easy) - 1
+
+set up a Django development environment called "heritagesites"
+create a Django mysites project and heritagesites app
+create a MySQL unesco_heritage_sites database
+import the database schema and data from a *.sql dump file (provided)
+update mysite/settings.py including connecting the heritagesites app to the unesco_heritage_sites database
+run the inspectdb utility to create a models.py file based on the database run migrations
+create a "superuser" account
+
+
+WEEK 5 - models (easy) - 1
+
+Run mysqldump to back up the unesco_heritage_sites database
+Create new database tables, columns and column constraints using run_mysql_script.py
+Add/edit Model classes in heritagesites/models.py
+Add/edit ModelAdmin classes in heritagesites/admin.py
+
+
+WEEK 6 - views (medium) - 2
+
+Set up a custom test runner that works with unmanaged models
+Fix broken heritagesites views
+Fix broken heritagesites tests and then run the tests
+Fix broken heritagesites templates
+Update URL paths
+Choose a stylish website color scheme for your heritagesites app
+Override bits of Bootstrap 4 with a custom heritagesites css file
+Creat a <uniqname>-heritage_sites_mtg6.zipof your work and submit it for evaluation
+
+WEEK 7 - auth (easy) - 1
+
+Install the social-auth-app-django
+Add a Google OAuth2 "social login" to the heritagesites app
+Restrict page access to authenticated/authorized users
+
+WEEK 8 - forms (hard) - 3
+
+Install and configue django-crispy-forms
+Create a set of CRUD templates for adding, updating, and deleting Heritage Sites
+Stage, commit, and push your changes to your Github heritagesites repo
+
+WEEK 9 - search (hard) - 3
+
+Install and configue django-filter
+Implement a search form
+Replace template tags and variables with model code
+Stage, commit, and push your changes to your Github heritagesites repo
+
+WEEK 10 - API (easy) - 1
+
+Revise the MySQL heritage_site_jurisdiction table foreign key (FK) constraints as well as update the heritagesites/models.py foreign key constraints
+Add a heritagesites REST API using the Django REST framework (DRF)
+Enhance Authz permissions with token-based authentication
+Generate API documentation
+Use Postman to issue HTTP requests against API endpoints
+Stage, commit, and push your changes to your Github heritagesites repo

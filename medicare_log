@@ -1,0 +1,154 @@
+WEEK 4 
+
+
+- Ins
+
+
+
+
+TEST CODE 
+
+SELECT * FROM medicare.address;
+SELECT * FROM medicare.f_medicare WHERE STREET LIKE '800 w randol%';
+SELECT * FROM medicare.city_state WHERE city_state_id = 697;
+SELECT * FROM medicare.f_medicare WHERE city_name like '%PLANO%';
+
+
+
+
+
+
+
+WORKING 
+City_state
+Referral_region
+Drg --> drg_desc
+
+
+NOT WORKING 
+Address  --> street
+Provider --> provider ID 
+
+
+LIST OF VERSIONS - CREATING DB 
+7 - Each table loads individually. Using temp tables for address and provide.r 
+8 - Trying to create non-temp tables and seeing if that works 
+9 - Includes a bunch of commented out scripts at the bottom that I'll need to add in later. 
+10 - Trying to fix the creation of the medicare_f table so that it includes all FKs. 
+	- Still not getting match with FKs except for city_state_ID 
+	(from example in MySQL WorkBench)
+11 - Tried changing out 1212.csv file with new medicare_data_output.csv file 
+	(Changed inspect_medicare_3.py script to create a new CSV) --> this is now in v3.5
+	Changed inspect_medicare script to include trim function --> this is now in v4
+	- Tried putting 1212.csv file back in (took out medicare_data_output) from medicare_initial
+	- Checked and confirmed that lengths are the same in master file (output) and individual column (i.e. FK) file, such as referral_region_desc. For Anchorage-AK it's 14 bytes on both. Per https://support.office.com/en-us/article/len-lenb-functions-29236f94-cedc-429d-affd-b5e33d2c67cb
+	- Tried adding in this function in inspect_medicare script v5 to ensure the encoding is the same 
+		source_path = os.path.join('input', 'csv', 'met_data_seroka-orig.csv')
+		encoding = find_encoding(source_path)
+		source_data_frame = read_csv(source_path, encoding, '\t')
+	- Trying with 1212.csv file initially
+12 - Tried changing the location of the so it's in the same directory.  --> NOTE: Did not actually try this.
+13 - New approach. Going to pull all from one CSV and use in-line SQL functions (get_unique equiv). to set up the database.
+	- Successfully was able to create FK match by creating new column for referral_region_desc using SELECT DISTINCT from main table. 
+	- Now deleting load data infile (won't pull from CSV anymore) for referral_region and will try inserting my new code into the medicare_initial.sql file
+14 - Trying my new trick on all the tables with FKs not just referral_region. 5 in total (see above for list)
+16 - Works. 
+17 - Changed city_state to city_state_temp in prepartaion for 18, where I'll add a new city_state table in addition to the temp 
+	(so they'll be 2 city_state tables, one regular and one temp, just like provider and address)
+18 - Added scripts from MyWorkbench to update M2M tables: 
+	- Create provider table 
+	- Update provider table 
+	- Create address table 
+	- Update address table 
+	- Create city_state table 
+	- Update city_state table
+	- Update provider_drg table
+
+
+INSTRUCTIONS FOR CREATING DB 
+
+0. Activate venv under Scripts 
+
+1. Run medicare_data_prep_make_fewer_records.py (from home dir). This creates the city_state column. 
+
+2. Run inspect_medicare_data_sets_5.py. This does some trimming and creates some extra CSVs. However, the output of this will be used in my main SQL db script so it's important.
+
+3. Run SQL script: 
+
+ C:\Users\chodge\Google Drive\SI664\medicare\scripts>python run_mysql_script.py -c config/medicare.yaml -p input/sql/medicare_initial_14.sql
+
+
+STEP BY STEP - WHAT THE medicare_initial.sql SCRIPT IS DOING 
+1. Create non M2M tables 
+	- city_stae
+	- referral_region
+	- drg
+
+
+
+2. Create temp M2M tables without any FK relationships 
+	- provider_temp
+	- address_temp
+	- t_medicare_1 (omnibus table that has all data)
+
+4. Load CSVs in using localinfile 
+	- city_state        city_state_name
+	- referral_region   referral_region_desc
+	- drg               drg_desc
+	- provider_temp     old_provider_id
+	- address_temp      street
+	- medicare_data      (all variables)
+
+	** These are all loading successfully
+
+5. Create regular (not temp) M2M tables with FK references
+	- provider
+	- address
+	- t_medicare_1
+
+	*In each of these, I'm doing a left join from the temp table to pull in the right data 
+
+	- address: 
+		- 
+
+
+
+FRIDAY 12/14 
+
+1. Old address population
+
+	INSERT IGNORE INTO address_temp(street, zip_code, city_id) 
+	SELECT DISTINCT tm.street, tm.zip_code, cn.city_id
+	FROM temp_medicare tm
+	LEFT JOIN city cn
+	ON tm.city_name = cn.city_name
+	LEFT JOIN state sn
+	ON cn.state_name = sn.state_name;
+
+
+2. Problem with address: 
+
+	- All the city_id's are the same for the same city (i.e. Lafayette), when they should be differentiated based on state also. So 290 for Lafayette should just be Lafayette, IN not Lafeyye IN & Lafayette LA & Lafayette CA
+
+	SELECT * FROM medicare.address_temp WHERE city_id = 290;
+
+	- ALso, when I do city_id = 290, I just get ONE city/state combination instead of multiple 
+
+
+
+3. Diagnosing the problem 
+	
+	- Issue seems to be with creating the city_id column in the address table 
+	- City_id populates fine in the city table. I get 3 rows when I type in Lafayette for city_name 
+		- Each has a different state ID
+		- Each has a different city ID 
+	- However, when I try to populate the address table with city_id, I see the same city_id value for all the entries in Lafayette, not 3 different ones like I should. 
+		- So I see city_id = 127 for the hospital in Lafayette, IN, Lafayette, CA, and Lafayette, LA, even though I should be seeing 3 different ones. 
+	- It doesn't seem to be an issue with the select statement. There's a problem when I insert it into the table. 
+	- Could it be an issue with the city_table? and the FKs? 
+		- What should the address FK go to? 
+
+		- City table FK goes to state_ID 
+
+
+		- Address table FK should go to city_ID

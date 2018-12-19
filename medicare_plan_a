@@ -1,0 +1,72 @@
+PLAN A
+
+
+
+1. Create state 
+2. Create drg
+3. Create referral 
+4. Create city (based on unique combination -- must create after state. This will create a diff ID for each city/state combo)
+
+5. Create temp address --> this will just be a list of addresses (based on street)
+6. Create temp provider --> this will just be a list of provider names (based on )
+
+
+----
+
+7. Populate all of these with just the unique values based on their unique attributes
+
+
+
+---- 
+
+
+8. Create medicare_final, which has alllllll the foreign keys.
+	
+	- Pull provider ID 
+	- Pull drg ID 
+	- Pull city ID 
+	- Pull state ID 
+	- Pull referral ID
+
+
+
+
+----
+
+9. Create regular address from medicare_final using command I have now,  
+	- Pull streets from temp_address
+	- Match street from medicare_final, and pull the associated city_id 
+	- Final list of columns will be: 
+		- Zip
+		- City_id 
+		- Street 
+
+10. Create regular provider from medicare_final using command I have now 
+	- Pull 
+
+
+
+----
+
+11. Create provider_drg from medicare_final using: 
+ 	- Pull drg_id 
+ 	- Pull provider_id
+
+
+
+
+
+PLAN B - utilize referral_region 
+
+
+--- referral_region = city/state combo --- > WRONG. CAN NOT DO. REFERRAL REGION IS BROADER. 
+
+
+
+
+
+----
+
+
+Diagnosing the rp	
+
