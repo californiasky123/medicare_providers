@@ -8,25 +8,25 @@ from django.contrib import admin
 import medicare.models as models
 
 
-@admin.register(models.Address)
-class AddressAdmin(admin.ModelAdmin):
-	fields = [
-		'address_id',
-		'street',
-		'zip_code',
-		'city',
-		'state'
-	]
+# @admin.register(models.Address)
+# class AddressAdmin(admin.ModelAdmin):
+# 	fields = [
+# 		'address_id',
+# 		'street',
+# 		'zip_code',
+# 		'city',
+# 		'state'
+# 	]
 
-	list_display = [
-		'address_id',
-		'street',
-		'zip_code',
-		'city',
-		'state'
-	]
+# 	list_display = [
+# 		'address_id',
+# 		'street',
+# 		'zip_code',
+# 		'city',
+# 		'state'
+# 	]
 
-	list_filter = ['street'] #
+# 	list_filter = ['street'] #
 
 # admin.site.register(models.CountryArea)
 
@@ -49,8 +49,8 @@ class DrgAdmin(admin.ModelAdmin):
 
 @admin.register(models.Provider)
 class ProviderAdmin(admin.ModelAdmin):
-	fields = ['provider_id', 'old_provider_id', 'provider_name', 'referral_region', 'address']
-	list_display = ['provider_id', 'old_provider_id', 'provider_name', 'referral_region', 'address']
+	fields = ['provider_id', 'old_provider_id', 'provider_name', 'referral_region', 'city']
+	list_display = ['provider_id', 'old_provider_id', 'provider_name', 'referral_region', 'city']
 	ordering = ['provider_name']
 
 

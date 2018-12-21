@@ -1,6 +1,6 @@
 import django_filters
 #from medicare.forms import SearchForm
-from medicare.models import Provider, Drg, ProviderDrg, City, State, Address, ReferralRegion
+from medicare.models import Provider, Drg, ProviderDrg, City, State, ReferralRegion
 
 
 class ProviderFilter(django_filters.FilterSet):

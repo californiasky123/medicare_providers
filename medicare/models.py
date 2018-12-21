@@ -10,23 +10,23 @@ from django.urls import reverse
 from django.urls import reverse_lazy
 
 
-class Address(models.Model):
-    address_id = models.AutoField(primary_key=True)
-    street = models.CharField(unique=True, max_length=100)
-    zip_code = models.CharField(unique=True, max_length=5)
-    city = models.ForeignKey('City', models.PROTECT)
-    state = models.ForeignKey('State', models.PROTECT)
-    #provider = models.ForeignKey('Provider', models.PROTECT) #chnote2 this is new --> may want to comment out later 
+# class Address(models.Model):
+#     address_id = models.AutoField(primary_key=True)
+#     street = models.CharField(unique=True, max_length=100)
+#     zip_code = models.CharField(unique=True, max_length=5)
+#     city = models.ForeignKey('City', models.PROTECT)
+#     state = models.ForeignKey('State', models.PROTECT)
+#     #provider = models.ForeignKey('Provider', models.PROTECT) #chnote2 this is new --> may want to comment out later 
 
-    class Meta:
-        managed = False
-        db_table = 'address'
-        ordering = ['street']
-        verbose_name = 'address'
-        verbose_name_plural = 'addresses'
+#     class Meta:
+#         managed = False
+#         db_table = 'address'
+#         ordering = ['street']
+#         verbose_name = 'address'
+#         verbose_name_plural = 'addresses'
 
-    def __str__ (self):
-        return self.street
+#     def __str__ (self):
+#         return self.street
 
 class City(models.Model):
     city_id = models.AutoField(primary_key=True)
@@ -66,10 +66,13 @@ class Provider(models.Model):
     provider_id = models.AutoField(primary_key=True)
     old_provider_id = models.CharField(unique=True, max_length=100)
     provider_name = models.CharField(unique=True, max_length=100)
+    street = models.CharField(unique=True, max_length=100) 
+    zip_code = models.CharField(unique=True, max_length=10)
     referral_region = models.ForeignKey('ReferralRegion', models.PROTECT)
-    address = models.ForeignKey('Address', models.PROTECT)
+    state = models.ForeignKey('State', models.PROTECT)
+    city = models.ForeignKey('City', models.PROTECT)
 
-    diagnoses = models.ManyToManyField(Drg, through='ProviderDrg')
+    diagnoses = models.ManyToManyField(Drg, through='ProviderDrg', blank=True, related_name='providers') #fixed per Anthony's suggestion 12/19/18
 
     class Meta:
         managed = False
@@ -124,13 +127,13 @@ class Provider(models.Model):
     @property
     def city_names(self):
 
-        cities = self.country_area.select_related('address__city').order_by('address__city__city_name')
+        cities = self.country_area.select_related('city').order_by('city__city_name')
 
         names = []
 
         for city in cities:
             # try: 
-            name = city.address.city.city_name # relationship between tables is dots, relationship between variable and a table is also dots
+            name = city.city_name # relationship between tables is dots, relationship between variable and a table is also dots
             #name = region.region_name
             if name is None:
                 continue

@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 from medicare.filters import ProviderFilter
 from medicare.forms import ProviderForm
 #from medicare.forms import SearchForm
-from medicare.models import Provider, Drg, ProviderDrg, Address, City, State, ReferralRegion
+from medicare.models import Provider, Drg, ProviderDrg, City, State, ReferralRegion
 
 from django_filters.views import FilterView
 from .models import Provider
@@ -40,7 +40,7 @@ class ProviderListView(generic.ListView):
 
 	def get_queryset(self):
 		return Provider.objects.all()\
-			.select_related('address', 'referral_region')\
+			.select_related('referral_region')\
 			.order_by('provider_name')
 			#.select_related('address')\
 

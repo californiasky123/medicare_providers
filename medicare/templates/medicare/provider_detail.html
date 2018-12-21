@@ -72,46 +72,46 @@
      {% endif %}
 
    
-  {% if provider.address.street %}
+  {% if provider.street %}
     <div class="row">
       <div class="col-sm-2">
         <p>Street</p>
       </div>
       <div class="col-sm-10">
-        <p>{{ provider.address.street }}</p>
+        <p>{{ provider.street  }}</p>
       </div>
     </div>
   {% endif %}
 
-    {% if provider.address.zip_code %}
+    {% if provider.zip_code %}
     <div class="row">
       <div class="col-sm-2">
         <p>Zip Code</p>
       </div>
       <div class="col-sm-10">
-        <p>{{ provider.address.zip_code }}</p>
+        <p>{{ provider.zip_code }}</p>
       </div>
     </div>
   {% endif %}
 
-    {% if provider.address.state.state_name %}
+    {% if provider.state.state_name %}
     <div class="row">
       <div class="col-sm-2">
         <p>State</p>
       </div>
       <div class="col-sm-10">
-        <p>{{ provider.address.state.state_name }}</p>
+        <p>{{ provider.state.state_name }}</p>
       </div>
     </div>
   {% endif %}
 
-      {% if provider.address.city.city_name %}
+      {% if provider.city.city_name %}
     <div class="row">
       <div class="col-sm-2">
         <p>City</p>
       </div>
       <div class="col-sm-10">
-        <p>{{ provider.address.city.city_name }}</p>
+        <p>{{ provider.city.city_name }}</p>
       </div>
     </div>
   {% endif %}
