@@ -141,14 +141,12 @@ class ProviderCreateView(generic.View):
 		form = ProviderForm(request.POST)
 		if form.is_valid():
 			provider = form.save(commit=False)
-			print(provider.provider_name)
 			provider.save() # should be saving data to provider table
 			for diagnosis in form.cleaned_data['diagnoses']:
-				print(diagnosis.drg_id)
 				ProviderDrg.objects.create(provider=provider, drg=diagnosis)
-				#ProviderDrg.objects.create(provider=provider, drg=diagnoses)
-			return HttpResponseRedirect(provider.get_absolute_url())
-			#return redirect(provider)
+				# ProviderDrg.objects.create(provider=provider, drg=diagnoses)
+			return redirect(provider) # shortcut to object's get_absolute_url()
+
 			# return HttpResponseRedirect(site.get_absolute_url())
 		return render(request, 'medicare/provider_new.html', {'form': form})
 

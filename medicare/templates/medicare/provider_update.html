@@ -19,9 +19,45 @@
   <form method="post" novalidate>
   {% csrf_token %}
 
-     <div class="row">
+    <div class="row">
+      <div class="col-6">
+        {{ form.provider_name|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        {{ form.old_provider_id|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-6">
         {{ form.referral_region|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        {{ form.street|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        {{ form.city|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        {{ form.state|as_crispy_field }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        {{ form.zip_code|as_crispy_field }}
       </div>
     </div>
 
@@ -30,19 +66,6 @@
         {{ form.diagnoses|as_crispy_field }}
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-6">
-        {{ form.provider_name|as_crispy_field }}
-      </div>
-    </div>
-
-<!--     <div class="row">
-      <div class="col-6">
-        {{ form.address|as_crispy_field }}
-      </div>
-    </div> -->
-
 
   <button type="submit" class="btn btn-outline-success">Update</button>
     &nbsp;<a class="btn btn-outline-secondary" href="{% url 'providers' %}">cancel</a>

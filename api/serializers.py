@@ -50,25 +50,21 @@ class ProviderSerializer(serializers.ModelSerializer):
 	provider_name = serializers.CharField(
 		allow_blank=False,
 		max_length=255
-
 	)
 
 	old_provider_id = serializers.CharField(
 		allow_blank=False,
 		max_length=10
-
 	)
 
 	street = serializers.CharField(
 		allow_blank=False,
 		max_length=255
-
 	)
 
 	zip_code = serializers.CharField(
 		allow_blank=False,
 		max_length=10
-
 	)
 
 	referral_region = ReferralRegionSerializer(
@@ -194,9 +190,24 @@ class ProviderSerializer(serializers.ModelSerializer):
 			instance.provider_name
 		)
 
+		instance.old_provider_id = validated_data.get(
+			'old_provider_id',
+			instance.old_provider_id
+		)
+
 		instance.referral_region_id = validated_data.get(
 			'referral_region_id',
 			instance.referral_region_id
+		)
+
+		instance.street = validated_data.get(
+			'street',
+			instance.street
+		)
+
+		instance.city_id = validated_data.get(
+			'city_id',
+			instance.city_id
 		)
 
 		instance.state_id = validated_data.get(
@@ -204,15 +215,9 @@ class ProviderSerializer(serializers.ModelSerializer):
 			instance.state_id
 		)
 
-		instance.state_id = validated_data.get(
-			'city_id',
-			instance.city_id
-		)
-
-
-		instance.old_provider_id = validated_data.get(
-			'old_provider_id',
-			instance.old_provider_id
+		instance.zip_code = validated_data.get(
+			'zip_ccode',
+			instance.zip_code
 		)
 
 		instance.save()
